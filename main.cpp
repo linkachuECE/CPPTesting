@@ -3,7 +3,9 @@
 using namespace std;
 
 int main(){
-    cout << "Hello world\n";
+    int w { 20 };
+
+    cout << "The variable is equal to" << w << "\n";
 
     return 0;
 }
