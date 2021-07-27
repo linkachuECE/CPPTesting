@@ -2,10 +2,21 @@
 
 using namespace std;
 
+bool printNumTimesTwo(int);
+
 int main(){
-    int w { 20 };
+    int x{};
+    string y{};
 
-    cout << "The variable is equal to" << w << "\n";
+    cout << "enter a number: ";
+    cin >> x;
 
-    return 0;
+    y = printNumTimesTwo(x) ? "greater than" : "less than";
+
+    cout << "Plus, the number you entered is " << y << " than 10\n";
+}
+
+bool printNumTimesTwo(int a){
+    cout << "Twice that number is: " << a * 2 << "\n";
+    return a > 10 ? true : false;
 }
