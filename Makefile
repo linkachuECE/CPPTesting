@@ -1,5 +1,5 @@
 all:
-	g++ -g main.cpp -o ./bin/main
+	g++ -std=c++17 -g *.cpp -o ./bin/main
 
 clean:
 	rm bin/*

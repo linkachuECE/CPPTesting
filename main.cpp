@@ -1,11 +1,11 @@
-#include <iostream>
-
+#include "headers.h"
 using namespace std;
 
+extern const double pi;
+
+inline constexpr int darryl {7};
+
 int main(){
-    int w { 20 };
-
-    cout << "The variable is equal to " << w << "\n";
-
+    cout << darryl << '\n';
     return 0;
 }
