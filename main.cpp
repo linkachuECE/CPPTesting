@@ -1,11 +1,21 @@
 #include "headers.h"
 using namespace std;
 
-extern const double pi;
+template <typename T, typename U>
+auto sub(T a, U b){
+    return a - b;
+}
 
-inline constexpr int darryl {7};
+/*
+auto sub(auto a, auto b){
+    return a - b;
+}*/
 
-int main(){
-    cout << darryl << '\n';
-    return 0;
+int main()
+{
+	std::cout << sub(3, 2) << '\n';
+	std::cout << sub(3.5, 2) << '\n';
+	std::cout << sub(4, 1.5) << '\n';
+ 
+	return 0;
 }

@@ -1,5 +1,5 @@
 all:
-	g++ -std=c++17 -g *.cpp -o ./bin/main
+	g++ -std=c++2a -fconcepts -g *.cpp -o ./bin/exec
 
 clean:
 	rm bin/*
