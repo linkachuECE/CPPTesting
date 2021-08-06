@@ -1,25 +1,18 @@
 #include "headers.h"
-#include <string>
-
-class Ball {
-    double m_radius{};
-    std::string m_color{};
-
-public:
-    Ball(double radius = 10.0, std::string color = "black"){
-        m_radius = radius;
-        m_color = color;
-    }
-
-    void print(){
-        std::cout << "Radius: " << m_radius << "\tColor: " << m_color << std::endl;
-    }
-
-};
+#include "Ball.h"
 
 int main(){
-    Ball ball{5.0, "White"};
-
-    ball.print();
-    return 0;
+	Ball def;
+	def.print();
+ 
+	Ball blue{ "blue" };
+	blue.print();
+	
+	Ball twenty{ 20.0 };
+	twenty.print();
+	
+	Ball blueTwenty{ "blue", 20.0 };
+	blueTwenty.print();
+ 
+	return 0;
 }
