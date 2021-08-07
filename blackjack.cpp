@@ -151,6 +151,7 @@ int getCardValue(Card& thisCard, int total){
 #define DEALER_LIMIT 17
 
 unsigned int second = 1000000;
+unsigned int currentDeckIndex = 0;
 
 struct member {
 	int total{};
@@ -166,8 +167,7 @@ void PressEnterToContinue(){
 
 // Returns a card from the given deck and erases it 
 Card pullCard(deck& thisDeck){
-	static int i{0};
-	return thisDeck[i++];
+	return thisDeck[currentDeckIndex++];
 }
 
 // Adds the value of of the most recently added cards to the member's total
@@ -207,7 +207,7 @@ void displayDealerStatus(member& dealer){
 	std::cout << "The dealer's current total is: " << dealer.total << std::endl;
 }
 
-// Ask whther the player wants to hit or stand
+// Ask whether the player wants to hit or stand
 bool askToHitOrStand(){
 	char input{};
 	while(true){
@@ -314,8 +314,13 @@ bool playBlackJack(){
 		}
 	}
 	std::cout << std::endl;
-	return askToPlayAgain();
 
+	if (askToPlayAgain()){
+		currentDeckIndex = 0;
+		return true;
+	}
+
+	return 0;
 }
 
 int main(){
