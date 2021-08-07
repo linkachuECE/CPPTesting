@@ -3,6 +3,15 @@
         "string": "cpp",
         "iostream": "cpp",
         "istream": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "ostream": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "random": "cpp",
+        "ranges": "cpp",
+        "streambuf": "cpp"
     }
 }
