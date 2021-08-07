@@ -8,7 +8,7 @@
                 "-std=c++2a",
                 "-fconcepts",
                 "-g",
-                "${fileDirname}/*.cpp",
+                "${fileDirname}/${fileBasename}",
                 "-o",
                 "${fileDirname}/bin/${fileBasenameNoExtension}"
             ],
