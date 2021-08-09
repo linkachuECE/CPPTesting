@@ -1,4 +1,5 @@
 #include "headers.h"
+<<<<<<< HEAD
 #include "Ball.h"
 
 int main(){
@@ -15,4 +16,10 @@ int main(){
 	blueTwenty.print();
  
 	return 0;
+=======
+
+int main(){
+
+    return 0;
+>>>>>>> 3e87387bb0115d8453b6c5da45c581aa2e79fd0b
 }
