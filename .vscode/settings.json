@@ -47,6 +47,8 @@
         "iosfwd": "cpp",
         "limits": "cpp",
         "new": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "chrono": "cpp",
+        "ratio": "cpp"
     }
 }
