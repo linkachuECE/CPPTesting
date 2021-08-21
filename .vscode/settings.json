@@ -49,6 +49,8 @@
         "new": "cpp",
         "stdexcept": "cpp",
         "chrono": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "fstream": "cpp",
+        "sstream": "cpp"
     }
 }
