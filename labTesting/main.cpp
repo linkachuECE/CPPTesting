@@ -1,156 +1,154 @@
 #include <iostream>
-#include <string>
+#include <vector>
 #include <algorithm>
-#include <iterator>
-#include <limits>
+#include "PlaylistNode.h"
 
-void GetNumOfNonWSCharacters(const std::string& userText) {
-	int total{};
-	for (char c : userText)
-		if (!isspace(c))
-			total++;
+using namespace std;
 
-	std::cout << "Number of non-whitespace characters: " << total << std::endl;
+void PrintMenu(const string playlistTitle) {
+	cout << playlistTitle << " PLAYLIST MENU" << endl;
+	cout << "a - Add song" << endl;
+	cout << "d - Remove song" << endl;
+	cout << "c - Change position of song" << endl;
+	cout << "s - Output songs by specific artist" << endl;
+	cout << "t - Output total time of playlist(in seconds)" << endl;
+	cout << "o - Output full playlist" << endl;
+	cout << "q - Quit" << endl;
+
 }
 
-void GetNumOfWords(const std::string& userText) {
-	int wordCount{};
-	enum state {
-		IN,
-		OUT
-	} currentState{ OUT };
+PlaylistNode* ExecuteMenu(char option, string playlistTitle, PlaylistNode* headNode) {
+	PlaylistNode* currentNode = headNode;
+	PlaylistNode* previousNode{};
+	PlaylistNode* temp{};
+	int counter{};
 
-	for (char c : userText) {
-		if (isspace(c) && currentState == IN) {
-			currentState = OUT;
-		}
-		else if (!isspace(c) && currentState == OUT) {
-			currentState = IN;
-			wordCount++;
-		}
-	}
+	string id, songName, artistName;
+	int length{}, oldPosition{}, newPosition{};
 
-	std::cout << "Number of words: " << wordCount << std::endl;
-}
+	switch (option) {
+		case 'a':
+			cout << "ADD SONG" << endl;
+			cout << "Enter song's unique ID:" << endl;
+			cin >> id;
+			cout << "Enter song's name:" << endl;
+			cin >> songName;
+			cout << "Enter artist's name:" << endl;
+			cin >> artistName;
+			cout << "Enter song's length (in seconds):" << endl;
+			cin >> length;
 
-void FindText(const std::string& userText) {
-	std::string input;
-	std::cout << "Enter a word or phrase to be found:" << std::endl;
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	std::getline(std::cin, input);
+			PlaylistNode* newNode = new PlaylistNode(id, songName, artistName, length);
 
-	size_t start{};
-	int count{};
+			while (currentNode->GetNext() != nullptr)
+				currentNode = currentNode->GetNext();
 
-	while (true) {
-		start = userText.find(input, start);
+			currentNode->SetNext(newNode);
 
-		if (start == std::string::npos)
 			break;
-		else {
-			start++;
-			count++;
-		}
-	}
 
-	std::cout << "\"" << input << "\" instances: " << count << std::endl;
-}
+		case 'd':
+			cout << "REMOVE SONG" << endl;
+			cout << "Enter song's unique ID:" << endl;
+			cin >> id;
 
-void ReplaceExclamation(std::string& userText) {
-	std::replace(userText.begin(), userText.end(), '!', '.');
-}
+			while (currentNode) {
+				if (currentNode->GetID() == id) {
+					cout << "\"" << currentNode->GetSongName() << "\" removed." << endl;
+					if (currentNode == headNode) {
+						headNode = currentNode->GetNext();
+						delete currentNode;
+					}
+					else {
+						previousNode->SetNext(currentNode->GetNext());
+						delete currentNode;
+					}
 
-void ShortenSpace(std::string& userText) {
-	enum state {
-		wasSpace,
-		wasChar
-	} currentState{ wasChar };
-
-	for (unsigned long i = 0; i < userText.size(); i++) {
-		if (isspace(userText.at(i))) {
-			if (currentState == wasSpace) {
-				userText.erase(i--, 1);
+				}
+				else {
+					previousNode = currentNode;
+					currentNode = currentNode->GetNext();
+				}
 			}
-			currentState = wasSpace;
-		}
-		else {
-			currentState = wasChar;
-		}
+
+			break;
+
+		case 'c':
+			cout << "CHANGE POSITION OF SONG" << endl;
+			cout << "Enter song's current position:" << endl;
+			cin >> oldPosition;
+			cout << "Enter new position for song:" << endl;
+			cin >> newPosition;
+
+			if (oldPosition < 1)
+				oldPosition = 1;
+			if (newPosition < 1)
+				newPosition = 1;
+
+			while ((++counter < oldPosition) && currentNode->GetNext()) {
+				previousNode = currentNode;
+				currentNode = currentNode->GetNext();
+			}
+
+			if (currentNode == headNode) {
+				temp = headNode;
+				headNode = headNode->GetNext();
+			} else {
+				temp = currentNode;
+				previousNode->SetNext(currentNode->GetNext());
+			}
+
+			counter = 0;
+
+			break;
+
+		case 's':
+
+			break;
+
+		case 't':
+
+			break;
+
+		case 'o':
+			while (currentNode) {
+				cout << playlistTitle << " - OUTPUT FULL PLAYLIST" << endl;
+				cout << counter++ << "." << endl;
+				cout << "Unique ID: " << currentNode->GetID() << endl;
+				cout << "Artist Name: " << currentNode->GetArtistName() << endl;
+				cout << "Song Length (in seconds): " << currentNode->GetSongLength() << endl;
+				cout << endl;
+
+				currentNode = currentNode->GetNext();
+			}
+			break;
+
+		case 'q':
+			exit(0);
+			break;
 	}
-}
 
-void PrintMenu() {
-	std::cout << "MENU" << std::endl;
-	std::cout << "c - Number of non-whitespace characters" << std::endl;
-	std::cout << "w - Number of words" << std::endl;
-	std::cout << "f - Find text" << std::endl;
-	std::cout << "r - Replace all !'s" << std::endl;
-	std::cout << "s - Shorten spaces" << std::endl;
-	std::cout << "q - Quit" << std::endl;
-	std::cout << std::endl;
-	std::cout << "Choose an option:" << std::endl;
-}
-
-void ExecuteMenu(std::string& userText, char optionSelect) {
-	bool invalidInput{ true };
-   
-   while(invalidInput){
-      invalidInput = false;
-      switch (optionSelect) {
-      case 'c':
-      case 'C':
-         GetNumOfNonWSCharacters(userText);
-         break;
-
-      case 'w':
-      case 'W':
-         GetNumOfWords(userText);
-         break;
-
-      case 'f':
-      case 'F':
-         FindText(userText);
-         break;
-
-      case 'r':
-      case 'R':
-         ReplaceExclamation(userText);
-         std::cout << "Edited text: " << userText << std::endl;
-         break;
-
-      case 's':
-      case 'S':
-         ShortenSpace(userText);
-         std::cout << "Edited text: " << userText;
-         break;
-
-      case 'q':
-      case 'Q':
-         exit(0);
-         break;
-
-      default:
-         invalidInput = true;
-         break;
-      }
-   }
+	return headNode;
 }
 
 int main() {
-	std::string userText{};
-	char charInput{};
-	std::cout << "Enter a sample text:" << std::endl;
-	std::getline(std::cin, userText);
-	std::cout << std::endl;
+	vector<char> validChoices{ 'a','d','c','s','t','o','q' };
+	string playlistTitle;
+	char input{};
+	PlaylistNode* headPtr{}, tailPtrP{};
+	
+	cout << "Enter Playlist's title:" << endl;
+	cin >> playlistTitle;
+	PrintMenu(playlistTitle);
+	cout << endl;
 
-	std::cout << "You entered: " << userText << std::endl;
+	do {
+		cout << "Choose an option:";
+		cin	>> input;
+	} while (!count(validChoices.begin(), validChoices.end(), input));
 
-	while (true) {
-		std::cout << std::endl;
-		PrintMenu();
-		std::cin >> charInput;
-		ExecuteMenu(userText, charInput);
-	}
+	headPtr = ExecuteMenu(input, playlistTitle, headPtr);
 
 	return 0;
 }
+
