@@ -53,6 +53,7 @@
         "fstream": "cpp",
         "sstream": "cpp",
         "map": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "iomanip": "cpp"
     }
 }
