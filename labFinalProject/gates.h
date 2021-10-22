@@ -1,5 +1,8 @@
 #ifndef GATES_H
 #define GATES_H
+#include <vector>
+#include <functional>
+#include <utility>
 
 namespace gate {
 
@@ -18,4 +21,5 @@ namespace gate {
 	bool Xnor(bool x, bool y);
 
 }
+
 #endif

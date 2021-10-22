@@ -60,7 +60,7 @@ int main() {
 		if (selection == 7)
 			notGate();
 		else if (selection == 'Q' || selection == 'q')
-			break;
+			return false;
 		else
 			twoInputGate(selection);
 
