@@ -62,6 +62,8 @@ int Logic_Node::getInput(){
     if(!m_isInput){
         if(isNotGate)
             return gate::Not(m_input1->getInput());
+        else if(m_isOutput)
+            return m_input1->getInput();
         else
             return m_logicFunction(m_input1->getInput(), m_input2->getInput());
     } else {
