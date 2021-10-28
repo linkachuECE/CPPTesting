@@ -20,9 +20,13 @@ namespace gate {
 
 	bool Xnor(bool x, bool y);
 
-	bool And_N(bool* arr, int length);
+	bool* And_N(bool* arr1, bool* arr2, int length);
 
-	bool Or_N(bool* arr, int length);
+	bool* Or_N(bool* arr1, bool* arr2, int length);
+
+	bool* Xnor_N(bool* arr1, bool* arr2, int length);
+
+	bool* Not_N(bool* arr, int length);
 
 }
 
