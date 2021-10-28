@@ -12,10 +12,35 @@ bool* circuit1(bool* signalA, bool* signalB, int length){
     output = gate::Not_N((gate::Xnor_N(gate::And_N(signalAFirst, signalBFirst, length / 2), gate::Or_N(signalALast, signalBLast, length / 2), length / 2)),(length / 2));
     return output;
 }
+
+bool* circuit2(bool* signalA, bool* signalB, int length){
+
+    int outputLength = length / 4;
+
+    bool* output = new bool[outputLength];
+    bool* signalAFirst = signalA;
+    bool* signalASecond = signalA + outputLength;
+    bool* signalAThird = signalA + (2 * outputLength);
+    bool* signalAFourth = signalA + (3 * outputLength);
+
+    bool* signalBFirst = signalB;
+    bool* signalBSecond = signalB + outputLength;
+    bool* signalBThird = signalB + outputLength;
+    bool* signalBFourth = signalB + (3 * outputLength);
+
+    output = gate::Or_N(gate::Or_N(gate::And_N(signalAFourth, signalBFirst, outputLength),
+                                    gate::Or_N(signalAThird, signalASecond, outputLength), outputLength), gate::And_N(
+                                    gate::Or_N(signalASecond, signalBThird, outputLength), 
+                                   gate::And_N(signalAFirst, signalBFourth, outputLength), outputLength), outputLength);
+    
+    return output;
+}
+
 int main(){
     int iInput{};
     char cInput{};
     bool userInput{};
+    bool* output{};
     std::cout << "Which circuit would you like to simulate? (Enter a number)" << std::endl;
     std::cout << "Circuit 1" << std::endl;
     std::cout << "Circuit 2" << std::endl;
@@ -47,10 +72,15 @@ int main(){
         }
     }
 
-    bool* output = circuit1(signalA, signalB, arrLength);
+    std::cout << std::endl;
+
+    if(iInput == 1)
+        output = circuit1(signalA, signalB, arrLength);
+    else if(iInput == 2)
+        output = circuit2(signalA, signalB, arrLength);
 
     std::cout << "Output of the circuit: " << std::endl;
-    for(int i = 0; i < arrLength / 2; i++){
+    for(int i = 0; i < 4; i++){
         std::cout << output[i] << " ";
     }
 
