@@ -58,12 +58,11 @@ namespace gate {
 	}
 
 	bool* And_N(bool* arr1, bool* arr2, int length){
-
 		bool* output = new bool[length];
 		for(int i = 0; i < length; i++)
 			output[i] = (arr1[i] && arr2[i]);
 		
-		if(DEBUG) debugNGateInput("AND", length, arr1, arr2);
+		if(DEBUG) debugNGateInput("AND" , length, arr1, arr2);
 		if(DEBUG) debugNGateOutput("AND", length, output);
 		return output;
 	}
