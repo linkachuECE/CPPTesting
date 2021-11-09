@@ -8,13 +8,13 @@ std::string solution(int number){
 	std::string romString{};
 
 	std::map<int, const char> numAssign{
-		std::pair<int, char>(1, 'I'),
-		std::pair<int, char>(5, 'V'),
-		std::pair<int, char>(10, 'X'),
-		std::pair<int, char>(50, 'L'),
-		std::pair<int, char>(100, 'C'),
-		std::pair<int, char>(500, 'D'),
-		std::pair<int, char>(1000, 'M')
+		{1,    'I'},
+		{5,    'V'},
+		{10,   'X'},
+		{50,   'L'},
+		{100,  'C'},
+		{500,  'D'},
+		{1000, 'M'}
 	};
 
 	std::reverse_iterator<std::_Rb_tree_iterator<std::pair<const int, const char>>> doublePrev;
