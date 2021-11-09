@@ -54,6 +54,8 @@
         "sstream": "cpp",
         "map": "cpp",
         "thread": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "list": "cpp",
+        "regex": "cpp"
     }
 }

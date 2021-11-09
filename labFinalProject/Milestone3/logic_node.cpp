@@ -3,6 +3,10 @@
 #include <iostream>
 
 int Logic_Node::inputNo = 1;
+int Logic_Node::notGateNo = 1;
+int Logic_Node::xorGateNo = 1;
+int Logic_Node::andGateNo = 1;
+int Logic_Node::orGateNo = 1;
 
 Logic_Node::Logic_Node(const char logicFunction,
                 Logic_Node* input1, 
@@ -32,25 +36,25 @@ void Logic_Node::determineLogicFunction(const char c){
         case 'n':
             m_logicFunction = nullptr;
             isNotGate = true;
-            m_gateName = "Not gate";
+            m_gateName = "NOT gate " + std::to_string(notGateNo++);
             break;
         
         case 'A':
         case 'a':
             m_logicFunction = gate::And;
-            m_gateName = "And gate";
+            m_gateName = "AND gate " + std::to_string(andGateNo++);
             break;
         
         case 'O':
         case 'o':
             m_logicFunction = gate::Or;
-            m_gateName = "Or gate";
+            m_gateName = "OR gate " + std::to_string(orGateNo++);
             break;
         
         case 'X':
         case 'x':
             m_logicFunction = gate::Xor;
-            m_gateName = "Xor gate";
+            m_gateName = "XOR gate " + std::to_string(xorGateNo++);
             break;
     }
 }
@@ -65,19 +69,22 @@ void Logic_Node::tieInput(Logic_Node& input){
 }
 
 int Logic_Node::getInput(){
-    if(!m_isInput){
-        std::cout << "Feeding input to " << m_gateName << std::endl;
-        if(isNotGate)
-            return gate::Not(m_input1->getInput());
-        else if(m_isOutput)
-            return m_input1->getInput();
-        else
-            return m_logicFunction(m_input1->getInput(), m_input2->getInput());
-    } else {
-        if(output == NULL){
-            std::cout << "Enter a value for " << m_gateName << ": ";
-            std::cin >> output;
+    if(m_output == -1){
+        if(!m_isInput){
+            if(isNotGate)
+                m_output = gate::Not(m_input1->getInput());
+            else if(m_isOutput)
+                m_output = m_input1->getInput();
+            else
+                m_output = m_logicFunction(m_input2->getInput(), m_input1->getInput());
+        } else {
+            std::cout << "Enter a value for " << m_gateName << " (1 or 0): ";
+            std::cin >> m_output;
         }
-        return output;
     }
+    if(!m_displayedOutput && !m_isInput){
+        std::cout << "Output from " << m_gateName << " is " << m_output << std::endl;
+        m_displayedOutput = true;
+    }
+    return m_output;
 }
