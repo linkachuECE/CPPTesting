@@ -24,30 +24,33 @@ void Node::depthFirstPrint(){
 }
 
 void Node::breadthFirstPrint(){
-    if(isRootNode) retrieveHeight();
+    if(isRootNode) setDistances();
 
-    for(int i = m_height; i >= 0; i--)
+    for(int i = 0; i <= m_maxHeight; i++)
         printLevel(i);
 }
 
-int Node::retrieveHeight(){
-    if(!m_leftChild && !m_rightChild)
-        m_height = 0;
-    else if(m_leftChild && !m_rightChild)
-        m_height = m_leftChild->retrieveHeight() + 1;
-    else if(!m_leftChild && m_rightChild)
-        m_height = m_rightChild->retrieveHeight() + 1;
-    else{
-        int rightHeight = m_rightChild->retrieveHeight();
-        int leftHeight = m_leftChild->retrieveHeight();
+int Node::setDistances(int parentDistance){
+    if(!isRootNode)
+        m_distance = parentDistance + 1;
 
-        m_height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
+    if(!m_leftChild && !m_rightChild)
+        m_maxHeight = 0;
+    else if(!m_leftChild && m_rightChild)
+        m_maxHeight = m_rightChild->setDistances(m_distance) + 1;
+    else if(m_leftChild && !m_rightChild)
+        m_maxHeight = m_leftChild->setDistances(m_distance) + 1;
+    else{
+        int leftMax = m_leftChild->setDistances(m_distance);
+        int rightMax = m_rightChild->setDistances(m_distance);
+        m_maxHeight = ((leftMax > rightMax) ? leftMax : rightMax) + 1;
     }
-    return m_height;
+
+    return m_maxHeight;
 }
 
 void Node::printLevel(int level){
-    if (m_height == level)
+    if (m_distance == level)
         std::cout << m_data << ", ";
     else{
         if(m_leftChild)
@@ -55,4 +58,11 @@ void Node::printLevel(int level){
         if(m_rightChild)
             m_rightChild->printLevel(level);
     }
+}
+
+Node::~Node(){
+    if(m_rightChild)
+        delete m_rightChild;
+    if(m_leftChild)
+        delete m_leftChild;
 }
