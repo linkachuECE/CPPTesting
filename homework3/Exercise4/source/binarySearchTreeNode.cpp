@@ -1,6 +1,5 @@
-#include "binarySearchTreeNode.h"
-#include <iostream>
-#include <algorithm>
+#include "../include/binarySearchTreeNode.h"
+#include "../include/lower.h"
 
 void BSTNode::wordInsert(std::string data){
     if(lower(data) < lower(m_data)){
@@ -36,11 +35,4 @@ BSTNode::~BSTNode(){
         delete m_rightChild;
     if(m_leftChild)
         delete m_leftChild;
-}
-
-std::string BSTNode::lower(std::string s){
-    std::transform(s.begin(), s.end(), s.begin(),
-    [](unsigned char c){ return std::tolower(c); });
-
-    return s;
 }

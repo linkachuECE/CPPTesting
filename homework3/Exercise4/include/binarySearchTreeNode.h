@@ -5,7 +5,7 @@
 class BSTNode{
 private:
     std::string m_data{};
-    BSTNode *m_rightChild{}, * m_leftChild{}, *m_parent{}, *m_successor{};
+    BSTNode *m_rightChild{}, * m_leftChild{}, *m_parent{};
     bool isRootNode{}, isRightChild{}, isLeftChild{};
 
 public:
@@ -20,8 +20,6 @@ public:
     void wordInsert(std::string data);
 
     bool depthFirstSearch(std::string searchWord);
-
-    std::string lower(std::string);
 };
 
 #endif

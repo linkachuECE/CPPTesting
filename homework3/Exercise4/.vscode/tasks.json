@@ -9,6 +9,7 @@
                 "-fconcepts",
                 "-g",
                 "${fileDirname}/*.cpp",
+                "${fileDirname}/source/*.cpp",
                 "-o",
                 "${fileDirname}/bin/${fileBasenameNoExtension}"
             ],

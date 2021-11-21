@@ -1,4 +1,5 @@
-#include "listNode.h"
+#include "../include/listNode.h"
+#include "../include/lower.h"
 #include <string>
 #include <iostream>
 
@@ -10,7 +11,7 @@ void ListNode::addNode(std::string word){
 }
 
 bool ListNode::search(std::string word){
-    if(word == m_word) return true;
+    if(lower(word) == lower(m_word)) return true;
     else if (m_nextNode) 
         return m_nextNode->search(word);
     else
