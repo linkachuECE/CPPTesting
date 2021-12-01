@@ -21,11 +21,11 @@ void Node::wordInsert(std::string data){
 }
 
 bool Node::depthFirstSearch(std::string searchWord){
-    if(searchWord == m_data)
+    if(lower(searchWord) == lower(m_data))
         return true;
-    else if(searchWord < m_data && m_leftChild)
+    else if(lower(searchWord) < lower(m_data) && m_leftChild)
         return m_leftChild->depthFirstSearch(searchWord);
-    else if(searchWord > m_data && m_rightChild)
+    else if(lower(searchWord) > lower(m_data) && m_rightChild)
         return m_rightChild->depthFirstSearch(searchWord);
     else
         return false;
