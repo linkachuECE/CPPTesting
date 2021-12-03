@@ -2,6 +2,7 @@
 #include "../include/graph.h"
 
 #include <limits>
+#include <sstream>
 
 void Graph::addNode(const char* name){
     for (auto node : m_nodes)
@@ -30,7 +31,7 @@ void Graph::addNode(const char* name, std::initializer_list<std::pair<const char
     
 }
 
-double Graph::findShortestDistance(const char* node1, const char* node2){
+GraphNode* Graph::prepareNodes(const char* node1, const char* node2){
     GraphNode *startNode{}, *endNode{}, *currNode{};
     double finalDistance;
 
@@ -42,7 +43,7 @@ double Graph::findShortestDistance(const char* node1, const char* node2){
     }
 
     if(!endNode || !startNode)
-        return -1;
+        return nullptr;
     
     currNode = startNode;
     currNode->setDistance(0);
@@ -60,15 +61,44 @@ double Graph::findShortestDistance(const char* node1, const char* node2){
             }
         }
     }
-    
-    finalDistance = endNode->getDistance();
 
-    clearNodes();
+    return endNode;
+}
+
+double Graph::getShortestDistance(const char* node1, const char* node2){
+    GraphNode* endNode = prepareNodes(node1, node2);
+    double finalDistance = endNode->getDistance();
 
     return finalDistance;
 }
 
-void Graph::clearNodes(){
+std::string Graph::getShortestPath(const char* node1, const char* node2){
+    GraphNode* endNode = prepareNodes(node1, node2);
+    GraphNode* currNode = endNode;
+
+    if(!endNode)
+        return std::string{"At least one of those nodes do not exist."};
+
+    std::vector<std::string> path{};
+
+    std::stringstream ss;
+
+    ss << "The shortest path from " << node1 << " to " << node2 << " is: " << std::endl;
+
+    while(currNode){
+        path.push_back(currNode->getName());
+        currNode = currNode->getPredecessor();
+    }
+
+    for(auto i = path.rbegin(); i < path.rend() - 1; i++)
+        ss << *i << " --> ";
+    
+    ss << path.front();
+
+    return ss.str();
+}
+
+void Graph::resetNodes(){
     for(auto node : m_nodes){
         node->setDistance(std::numeric_limits<double>::infinity());
         node->setPredecessor(nullptr);

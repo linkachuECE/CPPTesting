@@ -17,9 +17,11 @@ public:
     void addNode(const char* name);
     void addNode(const char* name, std::initializer_list<std::pair<const char*, double>> info);
 
-    double findShortestDistance(const char* node1, const char* node2);
+    GraphNode* prepareNodes(const char* node1, const char* node2);
+    double getShortestDistance(const char* node1, const char* node2);
+    std::string getShortestPath(const char* node1, const char* node2);
 
-    void clearNodes();
+    void resetNodes();
 };
 
 #endif
