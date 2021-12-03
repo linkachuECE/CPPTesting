@@ -9,7 +9,7 @@
                 "-g",
                 "*.cpp",
                 "-o",
-                "${fileDirname}/bin/program"
+                "${fileDirname}/../bin/program"
             ],
             "options": {
                 "cwd": "${fileDirname}"
