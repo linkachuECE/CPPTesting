@@ -1,6 +1,6 @@
-#include "../include/graphNode.h"
+#include "../include/graphVertex.h"
 
-GraphNode::GraphNode(const char* name, std::initializer_list<std::pair<GraphNode*, double>> neighbors)
+GraphVertex::GraphVertex(const char* name, std::initializer_list<std::pair<GraphVertex*, double>> neighbors)
 :m_name{name}{
     for (auto neighbor : neighbors){
         m_neighbors.emplace_back(neighbor.first, neighbor.second);
@@ -10,13 +10,13 @@ GraphNode::GraphNode(const char* name, std::initializer_list<std::pair<GraphNode
     }
 }
 
-void GraphNode::addNeighbor(GraphNode* neighbor, double distance){
+void GraphVertex::addNeighbor(GraphVertex* neighbor, double distance){
     m_neighbors.emplace_back(neighbor, distance);
     if(!neighbor->findNeighbor(this))
         neighbor->addNeighbor(this, distance);
 }
 
-bool GraphNode::findNeighbor(GraphNode* node) const{
+bool GraphVertex::findNeighbor(GraphVertex* node) const{
     for(auto neighbor : m_neighbors)
         if (neighbor.first == node)
             return true;
@@ -24,7 +24,7 @@ bool GraphNode::findNeighbor(GraphNode* node) const{
     return false;
 }
 
-void GraphNode::visit(){
+void GraphVertex::visit(){
     for(auto neighbor : m_neighbors){
         if(neighbor.first->getVisitStatus())
             continue;
@@ -38,10 +38,10 @@ void GraphNode::visit(){
     m_visited = true;
 }
 
-void GraphNode::setDistance(double distance){
+void GraphVertex::setDistance(double distance){
     m_distanceFromSource = distance;
 }
 
-void GraphNode::setPredecessor(GraphNode* pred){
+void GraphVertex::setPredecessor(GraphVertex* pred){
     m_predecessor = pred;
 }

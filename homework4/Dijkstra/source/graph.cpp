@@ -1,38 +1,38 @@
-#include "../include/graphNode.h"
+#include "../include/graphVertex.h"
 #include "../include/graph.h"
 
 #include <limits>
 #include <sstream>
 
-void Graph::addNode(const char* name){
+void Graph::addVertex(const char* name){
     for (auto node : m_nodes)
         if (std::string(name) == node->getName())
             return;
     
-    m_nodes.push_back(new GraphNode(name));
+    m_nodes.push_back(new GraphVertex(name));
 }
 
-void Graph::addNode(const char* name, std::initializer_list<std::pair<const char*, double>> neighbors){
+void Graph::addVertex(const char* name, std::initializer_list<std::pair<const char*, double>> neighbors){
     for(auto node : m_nodes)
         if(std::string(name) == node->getName())
             return;
 
-    std::vector<std::pair<GraphNode*, int>> neighborPointers{};
+    std::vector<std::pair<GraphVertex*, int>> neighborPointers{};
     
     for(auto neighbor : neighbors)
         for(auto node : m_nodes)
             if(node->getName() == std::string(neighbor.first))
                 neighborPointers.push_back(std::make_pair(node, neighbor.second));
 
-    m_nodes.push_back(new GraphNode(name));
+    m_nodes.push_back(new GraphVertex(name));
 
     for(auto n : neighborPointers)
         m_nodes.back()->addNeighbor(n.first, n.second);
     
 }
 
-GraphNode* Graph::prepareNodes(const char* node1, const char* node2){
-    GraphNode *startNode{}, *endNode{}, *currNode{};
+GraphVertex* Graph::prepareNodes(const char* node1, const char* node2){
+    GraphVertex *startNode{}, *endNode{}, *currNode{};
     double finalDistance;
 
     for(auto node : m_nodes){
@@ -66,15 +66,15 @@ GraphNode* Graph::prepareNodes(const char* node1, const char* node2){
 }
 
 double Graph::getShortestDistance(const char* node1, const char* node2){
-    GraphNode* endNode = prepareNodes(node1, node2);
+    GraphVertex* endNode = prepareNodes(node1, node2);
     double finalDistance = endNode->getDistance();
 
     return finalDistance;
 }
 
 std::string Graph::getShortestPath(const char* node1, const char* node2){
-    GraphNode* endNode = prepareNodes(node1, node2);
-    GraphNode* currNode = endNode;
+    GraphVertex* endNode = prepareNodes(node1, node2);
+    GraphVertex* currNode = endNode;
 
     if(!endNode)
         return std::string{"At least one of those nodes do not exist."};
